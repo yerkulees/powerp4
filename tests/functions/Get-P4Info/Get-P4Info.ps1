@@ -1,0 +1,1 @@
+Get-P4Info -ServerPort localhost:1666

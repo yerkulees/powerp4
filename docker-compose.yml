@@ -1,0 +1,73 @@
+version: '3.7'
+
+#
+# Container names have a domain-like naming scheme to facilitate dnsmasq usage.
+# By ending in .doc, which is not a valid TLD, we can easily configure dnsmasq
+# to resolve these names to the docker machine. This allows the containers to
+# use the same names to refer to each other as the host does when resolving the
+# container names.
+#
+
+services:
+  # other services are in the service repository
+  p4d.doc:
+    build:
+      context: .
+      dockerfile: containers/p4d/Dockerfile
+      args:
+        BASE_PATH: "containers/p4d"
+        # binding to the container IP address causes p4d to exit 255
+        P4PORT: "0.0.0.0:1666"
+        APT_URL: "http://package.perforce.com/apt/ubuntu"
+        PUB_KEY: "http://package.perforce.com/perforce.pubkey"
+    container_name: p4d.doc
+    ports:
+      - "1666:1666"
+  # chicago.doc:
+  #   build:
+  #     context: .
+  #     dockerfile: containers/chicago/Dockerfile
+  #     args:
+  #       BASE_PATH: "containers/chicago"
+  #       APT_URL: "http://package.perforce.com/apt/ubuntu"
+  #       PUB_KEY: "http://package.perforce.com/perforce.pubkey"
+  #   container_name: chicago.doc
+  #   image: chicago:latest
+  #   networks:
+  #     - authen
+  #   ports:
+  #     - "2666:2666"
+  # tokyo.doc:
+  #   build:
+  #     context: .
+  #     dockerfile: containers/tokyo/Dockerfile
+  #     args:
+  #       BASE_PATH: "containers/tokyo"
+  #       APT_URL: "http://package.perforce.com/apt/ubuntu"
+  #       PUB_KEY: "http://package.perforce.com/perforce.pubkey"
+  #   container_name: tokyo.doc
+  #   depends_on:
+  #     - chicago.doc
+  #   networks:
+  #     - authen
+  #   ports:
+  #     - "3666:3666"
+  # swarm.doc:
+  #   build:
+  #     context: .
+  #     dockerfile: containers/swarm/Dockerfile
+  #     args:
+  #       BASE_PATH: "containers/swarm"
+  #       P4PORT: "p4d.doc:1666"
+  #       APT_URL: "http://package.perforce.com/apt/ubuntu"
+  #       PUB_KEY: "http://package.perforce.com/perforce.pubkey"
+  #   container_name: swarm.doc
+  #   depends_on:
+  #     - p4d.doc
+  #     - chicago.doc
+  #     - tokyo.doc
+  #   networks:
+  #     - authen
+  #   ports:
+  #     - "8080:80"
+  #     - "8043:443"

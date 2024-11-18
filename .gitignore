@@ -1,0 +1,5 @@
+﻿publish
+TestResults
+.vs/
+**/bin/
+**/obj/
