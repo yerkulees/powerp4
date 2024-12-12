@@ -1,4 +1,6 @@
-﻿on:
+﻿name: Build Module
+
+on:
   push:
     branches:
       - main
@@ -6,10 +8,29 @@
 jobs:
   build:
 
+    strategy:
+        matrix:
+          configuration: ["Debug", "Publish"]
+
     runs-on: windows-latest
 
+    env:
+      Project_Path: "./power-p4/src/PowerP4Module.csproj"
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Build Project
-      run: .\build\build.ps1 -Configuration "Debug"
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .Net Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Build Module
+      run: dotnet build $env:PROJECT_PATH /p:Configuration=$env:CONFIGURATION /p:Platform="AnyCPU"
       shell: powershell
+      env:
+        PROJECT_PATH: ${{ env.Project_Path }}
+        CONFIGURATION: ${{ matrix.configuration }}
