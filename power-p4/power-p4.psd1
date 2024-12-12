@@ -10,19 +10,19 @@ ModuleVersion = '1.0.0'
 # CompatiblePSEditions = @()
 
 # ID used to uniquely identify this module
-GUID = 'dfdad566-ef78-41e4-b4f9-42c59fcb73fe'
+GUID = '2fdb1905-3fb0-40d2-a2c0-09f432695483'
 
 # Author of this module
-Author = 'yerkulees'
+Author = 'Yerkulees'
 
 # Company or vendor of this module
-CompanyName = 'MyCompany'
+CompanyName = 'Yerkeulees Inc'
 
 # Copyright statement for this module
-Copyright = '(c) yerkulees. All rights reserved.'
+Copyright = '(c) Yerkulees. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Wrapper for Perforce CLI Powershell Module'
+Description = 'Perforce Powershell Module'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''
